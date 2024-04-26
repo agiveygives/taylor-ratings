@@ -1,4 +1,6 @@
 <script>
+  import { onMount } from 'svelte';
+  import { writable } from 'svelte/store';
   import { styleToString } from '$lib/utils/styles';
 
   export let title;
@@ -8,6 +10,25 @@
   export let color;
   export let selected;
   export let onClick;
+
+  let isPhone = false;
+
+  onMount(() => {
+    const checkIsPhone = () => {
+      isPhone = (window.innerWidth <= 768); // Adjust 768 to your desired breakpoint
+    };
+
+    // Initial check
+    checkIsPhone();
+
+    // Update isPhone when window is resized
+    window.addEventListener('resize', checkIsPhone);
+
+    // Cleanup listener
+    return () => {
+      window.removeEventListener('resize', checkIsPhone);
+    };
+  });
 
   let isHovered = false;
 
@@ -23,10 +44,9 @@
       cardStyles['background-color'] = (isHovered || selected) ? color : '#ededed'
     }
     cardStyles['z-index'] = isHovered ? 1 : 0;
-    cardStyles['transition'] = 'transform 0.3s';
     cardStyles['filter'] = (isHovered || selected) ? 'grayscale(0)' : 'grayscale(1)';
     cardStyles['box-shadow'] = `0 0 ${isHovered ? 100 : 13}px ${color}`;
-    cardStyles['transform'] = isHovered ? 'scale(1.2)' : 'scale(1)';
+    cardStyles['transform'] = (!isPhone && isHovered) ? 'scale(1.2)' : 'scale(1)';
   }
 
 </script>
@@ -61,6 +81,13 @@
     justify-items: center;
     gap: 13px;
     transition: 'transform 0.3s';
+  }
+
+  /* Styles for screens larger than 768px wide (tablets and desktops) */
+  @media only screen and (min-width: 769px) {
+    .card {
+      transform: scale(1);
+    }
   }
 
   .title {
