@@ -80,7 +80,11 @@
     padding: 13px;
     justify-items: center;
     gap: 13px;
-    transition: 'transform 0.3s';
+    transition:
+      transform 0.3s ease-in-out,
+      filter 0.3s ease-in-out,
+      box-shadow 0.3s ease-in-out,
+      background-color 0.3s ease-in-out;
   }
 
   /* Styles for screens larger than 768px wide (tablets and desktops) */
