@@ -35,7 +35,10 @@ export const settings = createSettings();
 if (browser) {
 	const storedData = localStorage.getItem('settings');
 	if (storedData) {
-			settings.set(JSON.parse(storedData));
+			settings.set({
+				...defaultSettings,
+				...JSON.parse(storedData),
+			})
 	}
 
 	// Subscribe to changes and update localStorage

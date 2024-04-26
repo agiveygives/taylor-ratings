@@ -1,11 +1,10 @@
 
 <script>
 	import { onMount } from 'svelte';
+	import FaGuitar from 'svelte-icons/fa/FaGuitar.svelte';
 	import { allAlbums, taylorsVersionOnly } from '$lib/data/albums';
 	import { ratings, getRating } from '$lib/stores/ratings';
 	import { settings } from '$lib/stores/settings';
-
-	import AcousticGuitar from '$components/icons/AcousticGuitar.svelte';
 
 	const toggleTaylorsVersion = () => {
 		settings.update({ taylorsVersionOnly: !$settings.taylorsVersionOnly });
@@ -25,8 +24,10 @@
 
 			<button class="taylorsVersionToggleBtn" on:click={toggleTaylorsVersion}>
 				<span class={$settings.taylorsVersionOnly ? 'toggledOn' : ''}>
-					<AcousticGuitar fill={$settings.taylorsVersionOnly} />
-					<p style="color: black;">Toggle Taylor's Version Only</p>
+					<div class="guitar"><FaGuitar fill={$settings.taylorsVersionOnly} style="width: 40px;" /></div>
+					<p style="color: black; text-align: start;">
+						{$settings.taylorsVersionOnly ? 'Taylor\'s Version Only' : 'All Albums'}
+					</p>
 				</span>
 			</button>
 
@@ -89,6 +90,10 @@
 </div>
 
 <style>
+	.guitar {
+		width: 35px;
+	}
+
 	html,
 	body {
 			/* overflow-y: hidden; */
@@ -105,26 +110,6 @@
 			padding-top: 1rem;
 	}
 
-	/* Define gradient background with color stops aligned with items */
-	.album-colors {
-		background: linear-gradient(to bottom,
-			#40fdc1 0,       /* Start with red */
-			#40fdc1 33.33%,  /* Change to blue at the first item */
-			blue 33.33%,
-			blue 66.66%, /* Change to green at the second item */
-			green 66.66%,
-			green 100%,   /* Change to yellow at the third item */
-			yellow 100%
-		);
-		background-size: 100% 300%; /* Size to cover the whole gradient */
-		transition: background-position 0.5s; /* Smooth transition */
-	}
-
-	/* Adjust background position as you scroll */
-	.album-colors.scrolling {
-		background-position: 0 calc(-100vh + 1px); /* Shift the gradient up by one viewport height */
-	}
-
 	h1,
 	h2,
 	h3,
@@ -138,21 +123,11 @@
 			margin: 0 0 1rem 0;
 	}
 
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-			font-family: 'Georgia', serif;
-	}
-
 	p,
 	a,
 	li,
 	th,
 	td {
-			font-family: 'Roboto', sans-serif;
 			font-size: 1.2rem;
 			line-height: 1.5;
 	}
@@ -227,18 +202,21 @@
 	}
 
 	.taylorsVersionToggleBtn {
+		width: fit-content;
+		width: -moz-fit-content;
 		appearance: none;
 		border: none;
 		background: none;
 	}
-
-	.taylorsVersionToggleBtn:hover {
-		background-color: #B8396B;
-		border: solid 1px #B8396B;
+	.taylorsVersionToggleBtn:hover,
+	.taylorsVersionToggleBtn:hover > .toggledOn > .guitar {
+		background: none;
+		color: #B8396B;
 	}
 
 	.taylorsVersionToggleBtn:focus {
-		border: solid 1px #B8396B;
+		background: none;
+		outline: 1px solid #B8396B;
 	}
 
 	.taylorsVersionToggleBtn > span {

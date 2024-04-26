@@ -84,6 +84,10 @@ export const getRating = (ratings: RatingsType, albumId: string, song: string) =
 	return ratings[albumId]?.songRatings[song];
 };
 
+export const totalSongsRated = (ratings: RatingsType, albumId: string) => {
+	return Object.values(ratings[albumId]?.songRatings).filter(rating => rating !== null).length;
+}
+
 // Initialize the store from localStorage
 if (browser) {
 	const storedData = localStorage.getItem('ratings');
