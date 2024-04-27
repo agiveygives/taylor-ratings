@@ -532,3 +532,5 @@ export const taylorsVersionOnly = (
 		))
 	))
 );
+
+export const findAlbumById = (albumId: number) => allAlbumsData[albumId];
