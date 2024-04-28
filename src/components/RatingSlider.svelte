@@ -4,13 +4,27 @@
 
   export let value = 50;
   export let barColor = '#3498db'; // Initial color
+  export let onChange = (value) => {};
+
+  let translateHandleX = (50 - value) * -0.5;
 
   const barStyles = {
     'background-color': barColor,
     width: value + '%',
   }
 
-  $: barStyles['width'] = value + '%'; // Update the width of the bar
+  // Translate the slider handle so the bar fills the heart hands
+  const sliderStyles = {
+    "--translate-handle-x":`-${translateHandleX}%`,
+  }
+
+  $: {
+    barStyles['width'] = value + '%'; // Update the width of the bar
+
+    sliderStyles['--translate-handle-x'] = `${(50 - value) * -0.5}%`;
+
+    onChange(value);
+  }
 
   onMount(() => {
       updateBarColor();
@@ -28,6 +42,10 @@
 </script>
 
 <style>
+  input {
+    --translate-handle-x: 0%;
+  }
+
   .container {
     position: relative;
     width: 100%; /* Width of the outside container */
@@ -35,7 +53,7 @@
 
   .bar {
     position: absolute;
-    top: 25%;
+    top: 20%;
     left: 0;
     border-radius: 10px;
     height: 50%;
@@ -64,6 +82,7 @@
   .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
+    box-shadow: 0 0 0 0;
     width: 45px;
     height: 45px;
     border: 0;
@@ -72,9 +91,11 @@
     background-position: center; /* Center the image within the container */
     background-repeat: no-repeat; /* Prevent the image from repeating */
     cursor: pointer;
+    transform: translateX(var(--translate-handle-x));
   }
 
   .slider::-moz-range-thumb {
+    box-shadow: 0 0 0 0;
     width: 45px;
     height: 45px;
     border: 0;
@@ -83,10 +104,11 @@
     background-position: center; /* Center the image within the container */
     background-repeat: no-repeat; /* Prevent the image from repeating */
     cursor: pointer;
+    transform: translateX(var(--translate-handle-x));
   }
 </style>
 
 <div class="container">
   <div class='bar' style={styleToString(barStyles)}></div>
-  <input type="range" min="1" max="100" class="slider" bind:value on:input={handleChange}>
+  <input type="range" min="0" max="100" class="slider" style={styleToString(sliderStyles)} bind:value on:input={handleChange}>
 </div>
