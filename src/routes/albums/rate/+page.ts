@@ -1,6 +1,5 @@
 import { allAlbums } from '$lib/data/albums';
 
-
 export async function load({ params, url }) {
   const ids = url.searchParams.get('ids');
 

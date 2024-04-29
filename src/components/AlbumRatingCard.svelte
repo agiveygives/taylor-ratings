@@ -1,37 +1,48 @@
 <script>
+  import { onMount } from 'svelte';
   import { ratings, getRating } from '$lib/stores/ratings';
   import { styleToString } from '$lib/utils/styles';
   import RatingSlider from '$components/RatingSlider.svelte';
+  import EmbeddedSpotifyPlayer from '$components/EmbeddedSpotifyPlayer.svelte';
+  import SkeletonText from '$components/loaders/SkeletonText.svelte';
 
   export let album;
 
-  let ratingValue = {};
+  let spotifyLoaded = false;
+  let ratingStore;
 
-  album.songs.forEach((song) => {
-    ratingValue[song] = getRating(ratings, album.id, song);
+  onMount(() => {
+    ratings.subscribe(value => {
+      ratingStore = value;
+    })();
   });
 </script>
 
 <div class="container">
   <div class="card">
     <span class="header">
-      <img class="cover-art" src={album.coverUrl} alt={album.title} />
       <h3 class="title">{album.title}</h3>
+      <EmbeddedSpotifyPlayer album={album} />
     </span>
 
     <div class="ratings">
       {#each album.songs as song}
         <div class="song">
-          <div class="song-title">{song} - {ratingValue[song]}</div>
-          <div>
-            <RatingSlider
-              rating={getRating(ratings, album.id, song)}
-              barColor={album.color}
-              onChange={(value) => {
-                ratingValue[song] = value;
-              }}
-            />
-          </div>
+          {#if ratingStore}
+            <div class="song-title">{song} - {getRating($ratings, album.id, song) || "Unrated"}</div>
+            <div>
+              <RatingSlider
+                value={getRating(ratingStore, album.id, song)}
+                barColor={album.color}
+                onChange={(value) => {
+                  ratings.rateSong(album.id, song, value);
+                }}
+              />
+            </div>
+          {:else}
+            <div class="song-title">{song}</div>
+            <SkeletonText />
+          {/if}
         </div>
       {/each}
     </div>
@@ -64,16 +75,8 @@
 
   .header {
     display: grid;
-    grid-template-columns: 100px 1fr;
-    align-items: center;
-    gap: 13px;
-  }
-
-  .cover-art {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50px;
+    grid-template-columns: 1fr;
+    justify-items: center;
   }
 
   .ratings {

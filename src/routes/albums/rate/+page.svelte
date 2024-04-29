@@ -1,6 +1,5 @@
 <script>
   import { allAlbums } from '$lib/data/albums';
-  import Masonry from '$components/Masonry.svelte';
   import AlbumRatingCard from '$components/AlbumRatingCard.svelte';
 
   export let data;

@@ -3,7 +3,7 @@
   import { goto } from '$app/navigation';
 
   onMount(() => {
-    goto('/album-ratings/overall');
+    goto('/albums');
   });
 </script>
 

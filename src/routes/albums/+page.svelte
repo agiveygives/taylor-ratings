@@ -65,7 +65,7 @@
     appearance: none;
     tab-index: 0;
     position: fixed;
-    top: 26px;
+    bottom: 26px;
     right: 26px;
     margin: 13px 13px;
     padding: 12px 24px;

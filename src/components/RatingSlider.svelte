@@ -6,6 +6,10 @@
   export let barColor = '#3498db'; // Initial color
   export let onChange = (value) => {};
 
+  const defaultValue = 50;
+
+  let touched = false;
+
   let translateHandleX = (50 - value) * -0.5;
 
   const barStyles = {
@@ -22,12 +26,16 @@
     barStyles['width'] = value + '%'; // Update the width of the bar
 
     sliderStyles['--translate-handle-x'] = `${(50 - value) * -0.5}%`;
-
-    onChange(value);
   }
 
   onMount(() => {
-      updateBarColor();
+    if (value === null) {
+      value = defaultValue;
+    } else {
+      touched = true;
+    }
+
+    updateBarColor();
   });
 
   function updateBarColor() {
@@ -37,9 +45,25 @@
 
   function handleChange(event) {
       value = event.target.value;
+      touched && onChange(value);
       updateBarColor();
   }
 </script>
+
+<div class="container">
+  <div class='bar' style={styleToString(barStyles)}></div>
+  <input
+    type="range"
+    class="slider"
+    style={styleToString(sliderStyles)}
+    min="0"
+    max="100"
+    default={value?.toString()}
+    bind:value
+    on:input={handleChange}
+    on:focus={() => touched = true}
+  />
+</div>
 
 <style>
   input {
@@ -107,8 +131,3 @@
     transform: translateX(var(--translate-handle-x));
   }
 </style>
-
-<div class="container">
-  <div class='bar' style={styleToString(barStyles)}></div>
-  <input type="range" min="0" max="100" class="slider" style={styleToString(sliderStyles)} bind:value on:input={handleChange}>
-</div>
