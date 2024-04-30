@@ -31,10 +31,6 @@
   </div>
 </div>
 
-<div class="container">
-
-</div>
-
 <style>
   .spotify-embed {
     border-radius: 13px;
