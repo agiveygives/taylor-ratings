@@ -76,7 +76,7 @@ export const sortAlbumsByRatings = (ratings: RatingsType, sortBy: "average" | "s
 		if (sortValueA === null) return 1;
 		if (sortValueB === null) return -1;
 
-		return sortValueA - sortValueB;
+		return sortValueB - sortValueA;
 	});
 };
 

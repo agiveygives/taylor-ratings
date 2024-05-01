@@ -35,7 +35,7 @@
                 value={getRating(ratingStore, album.id, song)}
                 barColor={album.color}
                 onChange={(value) => {
-                  ratings.rateSong(album.id, song, value);
+                  ratings.rateSong(album.id, song, parseInt(value, 10));
                 }}
               />
             </div>
