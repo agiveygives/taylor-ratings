@@ -19,7 +19,15 @@
 
 {#key data.pathname}
 	<header>
-		<img class='logo' src="/logo.png" alt="Jukes McGee Taylor Ratings Logo" />
+		<div class="logo-text im-fell-dw-pica-regular">
+			<span class="sparkles">
+				✨
+			</span>
+			<span class="title">taylor ratings</span>
+			<span class="sparkles">
+				✨
+			</span>
+		</div>
 		<nav style={navStyles}>
 			<ul>
 				<li><a href="/albums">Albums</a></li>
@@ -42,9 +50,9 @@
 		margin: -8px -8px 16px -8px;
 	}
 
-	.logo {
-		max-height: 80px;
+	.logo-text {
 		display: none;
+		aria-hidden: true;
 	}
 
 	nav {
@@ -113,28 +121,20 @@
 
 	/* Tablet styles */
 	@media only screen and (min-width: 600px) {
-		.logo {
-			display: block;
-			width: 25vw;
-		}
-
 		header {
 			grid-template-columns: auto 1fr;
 		}
-	}
 
-	/* Desktop styles */
-	@media only screen and (min-width: 1024px) {
-		.logo {
-			display: block;
-			width: 25vw;
+		.logo-text {
+			display: inline-block;
 		}
-	}
 
-	/* Large desktop styles */
-	@media only screen and (min-width: 1440px) {
-		.logo {
-			display: block;
+		.sparkles {
+			font-size: 40px;
+		}
+
+		.title {
+			font-size: 30px;
 		}
 	}
 </style>

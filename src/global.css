@@ -1,4 +1,24 @@
+:root {
+  --large-desktop: 1440px;
+  --desktop: 1024px;
+  --tablet: 768px;
+  --phone: 425px;
+}
+
 html {
   font-family: "Raleway", sans-serif;
   background-color: #fff;
+}
+
+/* evermore */
+.im-fell-dw-pica-regular {
+  font-family: "IM Fell DW Pica", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.im-fell-dw-pica-regular-italic {
+  font-family: "IM Fell DW Pica", serif;
+  font-weight: 400;
+  font-style: italic;
 }
