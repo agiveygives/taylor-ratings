@@ -61,6 +61,7 @@
     default={value?.toString()}
     bind:value
     on:input={handleChange}
+    on:touchstart={() => touched = true}
     on:focus={() => touched = true}
   />
 </div>
